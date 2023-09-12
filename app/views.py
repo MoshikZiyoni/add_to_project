@@ -20,10 +20,18 @@ from geopy.distance import geodesic
 
 @api_view(['GET', 'POST'])
 def night_life(request):
-    city=request.data['city']
-    lon=request.data['longitude']
-    lat=request.data['latitude']
-    radius=request.data.get('radius',10)
+    if request.method == 'GET':
+        # Access query parameters from request.GET for GET requests
+        city = request.GET.get('city')  # Default to 'Tel Aviv' if not provided
+        lon = request.GET.get('longitude')
+        lat = request.GET.get('latitude')
+        radius = request.GET.get('radius', 10)  # Default to 10 if not provided
+    elif request.method == 'POST':
+        # Access JSON data from request.data for POST requests
+        city = request.data.get('city')  # Default to 'Tel Aviv' if not provided
+        lon = request.data.get('longitude')
+        lat = request.data.get('latitude')
+        radius = request.data.get('radius', 10)
     normalized_city_name = unidecode(city)
     normalized_city_name = normalized_city_name.strip()
     city_objs = City.objects.filter(Q(city__iexact=normalized_city_name) | Q(city__icontains=normalized_city_name)).first()
