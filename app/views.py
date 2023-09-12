@@ -32,20 +32,20 @@ def night_life(request):
         lon = request.data.get('longitude')
         lat = request.data.get('latitude')
         radius = request.data.get('radius', 10)
-    normalized_city_name = unidecode(city)
-    normalized_city_name = normalized_city_name.strip()
-    city_objs = City.objects.filter(Q(city__iexact=normalized_city_name) | Q(city__icontains=normalized_city_name)).first()
-    if city_objs:
-        # night_life_attractions=Night_Life.objects.filter(city_id=city_objs)
-        center_point = (lat, lon)
+    # normalized_city_name = unidecode(city)
+    # normalized_city_name = normalized_city_name.strip()
+    # city_objs = City.objects.filter(Q(city__iexact=normalized_city_name) | Q(city__icontains=normalized_city_name)).first()
+    # if city_objs:
+    #     # night_life_attractions=Night_Life.objects.filter(city_id=city_objs)
+    center_point = (lat, lon)
 
-        night_life_attractions = [
-            obj for obj in Night_Life.objects.all() if
-            geodesic(center_point, (obj.latitude, obj.longitude)).km <= radius
-        ]
-        serializer = Night_Lifeserializers(night_life_attractions, many=True)
-        
-        return Response(serializer.data, status=200)
+    night_life_attractions = [
+        obj for obj in Night_Life.objects.all() if
+        geodesic(center_point, (obj.latitude, obj.longitude)).km <= radius
+    ]
+    serializer = Night_Lifeserializers(night_life_attractions, many=True)
+    
+    return Response(serializer.data, status=200)
 
 
 @api_view(['GET', 'POST'])
