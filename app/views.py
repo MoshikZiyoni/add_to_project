@@ -20,6 +20,7 @@ from geopy.distance import geodesic
 
 @api_view(['GET', 'POST'])
 def night_life(request):
+#     
     if request.method == 'GET':
         # Access query parameters from request.GET for GET requests
         city = request.GET.get('city')  # Default to 'Tel Aviv' if not provided
