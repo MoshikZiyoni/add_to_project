@@ -138,6 +138,7 @@ def ai_bot(request):
 
 
 from playwright.sync_api import sync_playwright
+@api_view(['GET', 'POST'])
 def chat_with_ai(attractions, restaurants, days):
 
   print('Starting Playwright')
