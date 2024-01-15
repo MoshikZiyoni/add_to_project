@@ -136,11 +136,12 @@ def ai_bot(request):
     print(f"The function took {elapsed_time:.2f} seconds to return a response.")
     return JsonResponse(json_data,safe=False)
 
-
 from playwright.sync_api import sync_playwright
 @api_view(['GET', 'POST'])
-def chat_with_ai(attractions, restaurants, days):
-
+def chat_with_ai(request):
+  attractions=request.data.get('attractions')
+  restaurants=request.data.get('restaurants')
+  days=request.data.get('days')
   print('Starting Playwright')
 
   with sync_playwright() as p:
