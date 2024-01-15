@@ -5,7 +5,7 @@ from . import views
 app_name = 'app'
 
 urlpatterns = [
-    path("attraction", views.add_attraction, name= "add_attraction"),
+    path("ai-bot", views.ai_bot, name= "ai_bot"),
     path("night-life", views.night_life, name= "night_life"),
     
 ]
