@@ -137,5 +137,30 @@ def ai_bot(request):
     return JsonResponse(json_data,safe=False)
 
 
+from playwright.sync_api import sync_playwright
+def chat_with_ai(attractions, restaurants, days):
+
+  print('Starting Playwright')
+
+  with sync_playwright() as p:
+    browser = p.chromium.launch()
+    page = browser.new_page()
+
+    page.goto("https://api.deepai.org/chat")
+
+    format_json = '"day1": {"Tel Aviv": { "8:00 am": "Open your day with Breakfast at Cafe Xoho", "9:00 am": "Visit Tel Aviv Promenade","11:00 am": "Explore Tel Aviv Beaches", "1:00 pm": "Lunch at HaBasta","2:30 pm": "Visit Tel Aviv Port","4:00 pm": "Explore Rabin Square","6:00 pm": "Visit Tel Aviv Museum of Art","8:00 pm": "Dinner at The Blue Rooster"}'
+
+    question = f"I need your help to organize my trip and make it with schedules with times for each day. I have a list of attractions {attractions} and list of restaurants {restaurants} and I need you to organize that to be the best trip for {days} days,please organize that as a schedules with times for example: ({format_json})I want only 2-3 attractions in a day not more.return me the answer with the exact days I provided not less not more.return in JSON format"
+
+    time.sleep(1)
+    page.fill('textarea', question)
+    time.sleep(2)
+    page.keyboard.press('Enter')
+    print('sucess@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+    # rest of the logic
+
+  return 'hello'
+
+
 
 
